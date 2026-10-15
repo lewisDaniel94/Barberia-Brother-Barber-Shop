@@ -1,623 +1,167 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#08090c">
     <title>Brothers Barber Shop | Estilo y Elegancia</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        neonBlue: {
-                            DEFAULT: '#00f3ff',
-                            light: '#66f8ff',
-                            dark: '#00b3bc'
-                        },
-                        darkBg: '#121212',
-                        cardBg: '#1A1A1A',
-                        darkerBg: '#0A0A0A'
-                    }
-                }
-            }
-        }
-    </script>
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Archivo CSS Externo -->
+    <meta name="description" content="Barbería a domicilio. Cortes precisos, afeitado tradicional y arreglo de barba. Reserva tu cita en línea.">
+    <link rel="icon" href="img/logo.jpg.jpeg">
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-darkBg text-gray-200 antialiased selection:bg-neonBlue selection:text-black">
+<body>
+    <div id="progress"></div>
+    <header class="header"><div class="wrap bar">
+        <a href="#inicio" class="brand"><img src="img/logo.jpg.jpeg" alt="Brothers Barber Shop"><div><b>BROTHERS</b><small>Barber Shop</small></div></a>
+        <nav class="nav"><a href="#inicio">Inicio</a><a href="#servicios">Servicios</a><a href="#barberos">Barbero</a><a href="#reservas">Reservar</a><a href="#contacto">Contacto</a></nav>
+        <a href="#reservas" class="btn sm">Reservar ahora</a>
+        <button id="menu-btn" aria-label="Menú"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg></button>
+    </div></header>
+    <div id="mobile-menu"><a href="#inicio">Inicio</a><a href="#servicios">Servicios</a><a href="#barberos">Barbero</a><a href="#reservas">Reservar</a><a href="#contacto">Contacto</a><a class="btn" href="#reservas">Reservar ahora</a></div>
 
-    <header class="fixed top-0 left-0 right-0 z-50 bg-darkerBg/90 backdrop-blur-md border-b border-neonBlue/20">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-            <a href="#" class="flex items-center gap-3">
-                <img src="img/logo.jpg.jpeg" alt="Brothers Barber Shop" class="w-11 h-11 rounded-full object-cover border-2 border-neonBlue shadow-[0_0_10px_rgba(0,243,255,0.4)]">
-                <div>
-                    <span class="block font-serif text-base sm:text-lg font-bold tracking-wider text-white">BROTHERS</span>
-                    <span class="block text-xs uppercase tracking-widest text-neonBlue font-semibold">Barber Shop</span>
-                </div>
-            </a>
-            
-            <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
-                <a href="#inicio" class="hover:text-neonBlue transition-colors">Inicio</a>
-                <a href="#servicios" class="hover:text-neonBlue transition-colors">Servicios</a>
-                <a href="#barberos" class="hover:text-neonBlue transition-colors">Nuestros Barberos</a>
-                <a href="#reservas" class="hover:text-neonBlue transition-colors">Reservar Cita</a>
-                <a href="#contacto" class="hover:text-neonBlue transition-colors">Contacto</a>
-            </nav>
-
-            <div class="hidden md:block">
-                <a href="#reservas" class="bg-neonBlue text-black font-semibold px-5 py-2.5 rounded-full hover:bg-neonBlue-light transition-all shadow-lg shadow-neonBlue/30">
-                    Reservar Ahora
-                </a>
-            </div>
-
-            <!-- Mobile Menu Button -->
-            <button id="menu-btn" class="md:hidden text-neonBlue focus:outline-none">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                </svg>
-            </button>
-        </div>
-
-        <!-- Mobile Menu Modal -->
-        <div id="mobile-menu" class="hidden md:hidden bg-darkerBg border-b border-neonBlue/20 px-4 pt-2 pb-6 space-y-3">
-            <a href="#inicio" class="block py-2 hover:text-neonBlue transition-colors border-b border-gray-800">Inicio</a>
-            <a href="#servicios" class="block py-2 hover:text-neonBlue transition-colors border-b border-gray-800">Servicios</a>
-            <a href="#barberos" class="block py-2 hover:text-neonBlue transition-colors border-b border-gray-800">Nuestros Barberos</a>
-            <a href="#reservas" class="block py-2 hover:text-neonBlue transition-colors border-b border-gray-800">Reservar Cita</a>
-            <a href="#contacto" class="block py-2 hover:text-neonBlue transition-colors">Contacto</a>
-            <div class="pt-2">
-                <a href="#reservas" class="block text-center bg-neonBlue text-black font-semibold py-3 rounded-full shadow-lg shadow-neonBlue/20">
-                    Reservar Ahora
-                </a>
-            </div>
-        </div>
-    </header>
-
-    <section id="inicio" class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
-        <div class="absolute inset-0 z-0">
-            <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&q=80&w=1920" alt="Barbershop Background" class="w-full h-full object-cover opacity-25 filter grayscale">
-            <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-darkBg/60 to-transparent"></div>
-        </div>
-
-        <div class="relative z-10 max-w-4xl mx-auto px-4 text-center py-20">
-            <span class="inline-block uppercase tracking-[0.3em] text-neonBlue text-xs sm:text-sm font-semibold mb-4 border border-neonBlue/40 px-4 py-1.5 rounded-full bg-neonBlue/10 shadow-[0_0_15px_rgba(0,243,255,0.15)]">
-                Tradición & Estilo Moderno
-            </span>
-            <h1 class="font-serif text-4xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-white mb-6 leading-tight">
-                Barberia a<span class="text-neonBlue italic drop-shadow-[0_0_15px_rgba(0,243,255,0.4)]"> <br>Domicilio</span>
-            </h1>
-            <p class="text-gray-400 text-lg sm:text-xl max-w-2xl mx-auto mb-10 font-light">
-                Experimenta el verdadero servicio de barbería tradicional en un ambiente exclusivo. Cortes precisos, afeitados con toalla caliente y la mejor atención.
-            </p>
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#reservas" class="w-full sm:w-auto bg-neonBlue text-black font-bold px-8 py-4 rounded-full hover:bg-neonBlue-light transition-all shadow-xl shadow-neonBlue/30 flex items-center justify-center gap-2">
-                    <span>Agendar Cita</span>
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
-                </a>
-                <a href="#servicios" class="w-full sm:w-auto border border-gray-700 hover:border-neonBlue text-white font-medium px-8 py-4 rounded-full transition-all">
-                    Ver Servicios
-                </a>
-            </div>
-
-            <!-- Features Highlights -->
-            <div class="grid grid-cols-2 md:grid-cols-3 gap-6 mt-20 pt-12 border-t border-gray-800 text-left">
-                <div class="flex items-start gap-3">
-                    <div class="text-neonBlue mt-1">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-white">Barbero Experto</h4>
-                        <p class="text-xs text-gray-400">Maestro en el arte clásico y moderno.</p>
-                    </div>
-                </div>
-                <div class="flex items-start gap-3">
-                    <div class="text-neonBlue mt-1">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-white">Productos Premium</h4>
-                        <p class="text-xs text-gray-400">Las mejores marcas para tu barba y cabello.</p>
-                    </div>
-                </div>
-                <div class="col-span-2 md:col-span-1 flex items-start gap-3">
-                    <div class="text-neonBlue mt-1">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                    </div>
-                    <div>
-                        <h4 class="font-semibold text-white">Ambiente Exclusivo</h4>
-                        <p class="text-xs text-gray-400">Disfruta una bebida de cortesía al llegar.</p>
-                    </div>
-                </div>
+    <section id="inicio" class="hero">
+        <img class="hero-bg" src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&q=80&w=1920" alt="">
+        <div class="wrap">
+            <span class="tag" data-reveal>Tradición &amp; Estilo Moderno</span>
+            <h1 data-reveal>Barbería a <em>Domicilio</em></h1>
+            <p class="lead" data-reveal>Experimenta el verdadero servicio de barbería tradicional en un ambiente exclusivo. Cortes precisos, afeitados con toalla caliente y la mejor atención.</p>
+            <div class="cta" data-reveal><a href="#reservas" class="btn">Agendar cita <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><a href="#servicios" class="btn ghost">Ver servicios</a></div>
+            <div class="perks">
+                <div class="perk" data-reveal><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><circle cx="12" cy="9" r="6"/><path d="M8.5 14L7 22l5-3 5 3-1.5-8"/></svg></i><div><h4>Barbero Experto</h4><p>Maestro en el arte clásico y moderno.</p></div></div>
+                <div class="perk" data-reveal><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 13l4 4L19 7"/></svg></i><div><h4>Productos Premium</h4><p>Las mejores marcas para tu barba y cabello.</p></div></div>
+                <div class="perk" data-reveal><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 8h12v6a5 5 0 0 1-5 5H10a5 5 0 0 1-5-5zM17 10h2a2 2 0 0 1 0 4h-2M8 2v3M12 2v3"/></svg></i><div><h4>Ambiente Exclusivo</h4><p>Disfruta una bebida de cortesía al llegar.</p></div></div>
             </div>
         </div>
     </section>
 
-    <section id="servicios" class="py-24 bg-darkerBg/50 border-t border-b border-gray-900">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="text-neonBlue uppercase tracking-widest text-xs font-semibold block mb-2">Lo Que Hacemos</span>
-                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white mb-4">Nuestros Servicios</h2>
-                <p class="text-gray-400">Diseñados para realzar tu imagen con precisión y estilo impecable.</p>
+    <section id="servicios" class="sec alt"><div class="wrap">
+        <div class="head" data-reveal><small>Lo que hacemos</small><h2>Nuestros Servicios</h2><p>Diseñados para realzar tu imagen con precisión y estilo impecable.</p></div>
+        <div class="grid2">
+        <article class="svc tilt" data-reveal>
+          <div class="svc-top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88M14.47 14.48 20 20M8.12 8.12 12 12"/></svg></div><h3>Corte Clásico</h3><span class="price">$4.00</span></div>
+          <p>Corte de cabello personalizado al estilo deseado (Fade, Pompadour, Crop), lavado, perfilado de contornos con navaja y peinado final con productos profesionales.</p>
+          <div class="svc-foot"><span>⏱ 45 mins</span><button type="button" class="link" data-pick="Corte Clásico">Reservar este servicio →</button></div>
+        </article>
+        <article class="svc tilt" data-reveal>
+          <div class="svc-top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 3l1.9 5.1L19 10l-5.1 1.9L12 17l-1.9-5.1L5 10l5.1-1.9z"/><path d="M19 16l.7 1.8 1.8.7-1.8.7L19 21l-.7-1.8-1.8-.7 1.8-.7z"/></svg></div><h3>Arreglo de Barba</h3><span class="price">$3.00</span></div>
+          <p>Diseño y recorte de barba, aplicación de toallas calientes para abrir poros, afeitado de contornos con navaja, aceite hidratante y bálsamo suavizante.</p>
+          <div class="svc-foot"><span>⏱ 30 mins</span><button type="button" class="link" data-pick="Arreglo de Barba">Reservar este servicio →</button></div>
+        </article>
+        <article class="svc tilt" data-reveal>
+          <div class="svc-top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 2l3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></div><h3>Corte + Barba (Combo)</h3><span class="price">$6.00</span></div>
+          <p>La experiencia completa de Brothers Barber Shop. Incluye corte de cabello a elección, arreglo integral de barba con ritual de toallas calientes y acabado profesional.</p>
+          <div class="svc-foot"><span>⏱ 75 mins</span><button type="button" class="link" data-pick="Corte + Barba (Combo)">Reservar este servicio →</button></div>
+        </article>
+        <article class="svc tilt" data-reveal>
+          <div class="svc-top"><div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M12 2.7s6 6.2 6 10.8a6 6 0 0 1-12 0C6 8.9 12 2.7 12 2.7z"/></svg></div><h3>Afeitado Tradicional</h3><span class="price">$5.00</span></div>
+          <p>Afeitado completo de rostro con navaja libre, ritual de vapor y toallas calientes, espuma artesanal, loción astringente y masaje facial relajante.</p>
+          <div class="svc-foot"><span>⏱ 40 mins</span><button type="button" class="link" data-pick="Afeitado Tradicional">Reservar este servicio →</button></div>
+        </article>
+        </div>
+    </div></section>
+
+    <section id="barberos" class="sec"><div class="wrap">
+        <div class="head" data-reveal><small>Profesional</small><h2>Nuestro Barbero</h2><p>Maestro artesano dedicado a perfeccionar tu imagen.</p></div>
+        <div class="pro" data-reveal>
+            <div class="pro-photo"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=600" alt="Lewis Habano"></div>
+            <div><h3>Lewis Habano</h3><p class="role">Master Barber &amp; Estilista</p>
+            <p>10 años de experiencia transformando estilos con precisión milimétrica y atención personalizada.</p>
+            <button type="button" class="btn ghost" data-barber="Lewis Habano">Elegir a Lewis</button></div>
+        </div>
+    </div></section>
+
+    <section id="reservas" class="sec alt"><div class="wrap">
+        <div class="head" data-reveal><small>Sistema en línea</small><h2>Reserva tu Cita</h2><p>Completa los siguientes pasos para asegurar tu espacio en nuestra agenda.</p></div>
+        <div class="book" data-reveal>
+            <div class="stepper">
+                <div class="st on" id="step-indicator-1"><span>1</span>Servicios</div>
+                <div class="st" id="step-indicator-2"><span>2</span>Barbero</div>
+                <div class="st" id="step-indicator-3"><span>3</span>Fecha y hora</div>
+                <div class="st" id="step-indicator-4"><span>4</span>Tus datos</div>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Service 1 -->
-                <div class="bg-cardBg p-6 sm:p-8 rounded-2xl border border-gray-800 hover:border-neonBlue/60 transition-all flex flex-col justify-between group">
-                    <div>
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="font-serif text-xl sm:text-2xl font-bold text-white group-hover:text-neonBlue transition-colors">Corte Clásico</h3>
-                            <span class="text-neonBlue font-bold text-xl">$4.00</span>
-                        </div>
-                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
-                            Corte de cabello personalizado al estilo deseado (Fade, Pompadour, Crop), lavado, perfilado de contornos con navaja y peinado final con productos profesionales.
-                        </p>
+            <div id="form-alert"><span id="form-alert-text"></span></div>
+
+            <form id="booking-form" onsubmit="confirmBooking(event)">
+                <div id="step-1" class="step-panel">
+                    <h3>Selecciona uno o más servicios</h3>
+                    <div class="opts">
+          <label class="opt"><input type="checkbox" name="service" value="Corte Clásico" data-price="4" data-min="45"><div class="l"><b>Corte Clásico</b><small>45 mins</small></div><span class="p">$4.00</span></label>
+          <label class="opt"><input type="checkbox" name="service" value="Arreglo de Barba" data-price="3" data-min="30"><div class="l"><b>Arreglo de Barba</b><small>30 mins</small></div><span class="p">$3.00</span></label>
+          <label class="opt"><input type="checkbox" name="service" value="Corte + Barba (Combo)" data-price="6" data-min="75"><div class="l"><b>Corte + Barba (Combo)</b><small>75 mins</small></div><span class="p">$6.00</span></label>
+          <label class="opt"><input type="checkbox" name="service" value="Afeitado Tradicional" data-price="5" data-min="40"><div class="l"><b>Afeitado Tradicional</b><small>40 mins</small></div><span class="p">$5.00</span></label>
                     </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-800/80 text-xs text-gray-500">
-                        <span class="flex items-center gap-1">
-                            <svg class="w-4 h-4 text-neonBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            45 mins
-                        </span>
-                        <a href="#reservas" class="text-neonBlue font-semibold hover:underline">Reservar este servicio &rarr;</a>
-                    </div>
+                    <div class="totalbar"><span id="tb-count">0 servicios</span><span>Total: <strong id="tb-total">$0.00</strong></span></div>
+                    <div class="nav-row"><button type="button" onclick="validarServiciosYavanzar(2)" class="btn">Siguiente <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
                 </div>
 
-                <!-- Service 2 -->
-                <div class="bg-cardBg p-6 sm:p-8 rounded-2xl border border-gray-800 hover:border-neonBlue/60 transition-all flex flex-col justify-between group">
-                    <div>
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="font-serif text-xl sm:text-2xl font-bold text-white group-hover:text-neonBlue transition-colors">Arreglo de Barba</h3>
-                            <span class="text-neonBlue font-bold text-xl">$3.00</span>
-                        </div>
-                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
-                            Diseño y recorte de barba, aplicación de toallas calientes para abrir poros, afeitado de contornos con navaja, aceite hidratante y bálsamo suavizante.
-                        </p>
-                    </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-800/80 text-xs text-gray-500">
-                        <span class="flex items-center gap-1">
-                            <svg class="w-4 h-4 text-neonBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            30 mins
-                        </span>
-                        <a href="#reservas" class="text-neonBlue font-semibold hover:underline">Reservar este servicio &rarr;</a>
-                    </div>
+                <div id="step-2" class="step-panel">
+                    <h3>Barbero disponible</h3>
+                    <label class="opt" style="max-width:460px;margin:auto;border-color:var(--a)">
+                        <input type="radio" name="barber" value="Lewis Habano" checked required>
+                        <div class="l"><b>Lewis Habano</b><small>Master Barber &amp; Estilista</small></div><span class="p" style="font-size:.75rem">Seleccionado</span>
+                    </label>
+                    <div class="nav-row"><button type="button" onclick="prevStep(1)" class="btn ghost">Atrás</button><button type="button" onclick="nextStep(3)" class="btn">Siguiente <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
                 </div>
 
-                <!-- Service 3 -->
-                <div class="bg-cardBg p-6 sm:p-8 rounded-2xl border border-gray-800 hover:border-neonBlue/60 transition-all flex flex-col justify-between group">
-                    <div>
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="font-serif text-xl sm:text-2xl font-bold text-white group-hover:text-neonBlue transition-colors">Corte + Barba (Combo)</h3>
-                            <span class="text-neonBlue font-bold text-xl">$6.00</span>
-                        </div>
-                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
-                            La experiencia completa de Brothers Barber Shop. Incluye corte de cabello a elección, arreglo integral de barba con ritual de toallas calientes y acabado profesional.
-                        </p>
-                    </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-800/80 text-xs text-gray-500">
-                        <span class="flex items-center gap-1">
-                            <svg class="w-4 h-4 text-neonBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            75 mins
-                        </span>
-                        <a href="#reservas" class="text-neonBlue font-semibold hover:underline">Reservar este servicio &rarr;</a>
-                    </div>
+                <div id="step-3" class="step-panel">
+                    <h3>Elige la fecha y hora disponible</h3>
+                    <div style="margin-bottom:22px"><label class="f" for="booking-date">Fecha de la cita</label><input type="date" id="booking-date" required style="max-width:300px"></div>
+                    <label class="f">Hora disponible</label>
+                    <input type="hidden" id="booking-time" value="">
+                    <div class="slots"><button type="button" class="slot" data-v="09:00 AM" aria-pressed="false">09:00 AM</button><button type="button" class="slot" data-v="10:00 AM" aria-pressed="false">10:00 AM</button><button type="button" class="slot" data-v="11:00 AM" aria-pressed="false">11:00 AM</button><button type="button" class="slot" data-v="01:00 PM" aria-pressed="false">01:00 PM</button><button type="button" class="slot" data-v="02:30 PM" aria-pressed="false">02:30 PM</button><button type="button" class="slot" data-v="04:00 PM" aria-pressed="false">04:00 PM</button><button type="button" class="slot" data-v="05:30 PM" aria-pressed="false">05:30 PM</button><button type="button" class="slot" data-v="07:00 PM" aria-pressed="false">07:00 PM</button></div>
+                    <div class="nav-row"><button type="button" onclick="prevStep(2)" class="btn ghost">Atrás</button><button type="button" onclick="verificarYAvanzar()" class="btn">Siguiente <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" ><path d="M5 12h14M13 6l6 6-6 6"/></svg></button></div>
                 </div>
 
-                <!-- Service 4 -->
-                <div class="bg-cardBg p-6 sm:p-8 rounded-2xl border border-gray-800 hover:border-neonBlue/60 transition-all flex flex-col justify-between group">
-                    <div>
-                        <div class="flex justify-between items-start mb-4">
-                            <h3 class="font-serif text-xl sm:text-2xl font-bold text-white group-hover:text-neonBlue transition-colors">Afeitado Tradicional</h3>
-                            <span class="text-neonBlue font-bold text-xl">$5.00</span>
-                        </div>
-                        <p class="text-gray-400 text-sm mb-6 leading-relaxed">
-                            Afeitado completo de rostro con navaja libre, ritual de vapor y toallas calientes, espuma artesanal, loción astringente y masaje facial relajante.
-                        </p>
+                <div id="step-4" class="step-panel">
+                    <h3>Tus datos para confirmar</h3>
+                    <div class="fields">
+                        <div><label class="f" for="client-name">Nombre completo</label><input type="text" id="client-name" placeholder="Ej. Roberto Gómez" autocomplete="name" required></div>
+                        <div><label class="f" for="client-email">Correo electrónico</label><input type="email" id="client-email" placeholder="Ej. roberto@email.com" autocomplete="email" required></div>
                     </div>
-                    <div class="flex items-center justify-between pt-4 border-t border-gray-800/80 text-xs text-gray-500">
-                        <span class="flex items-center gap-1">
-                            <svg class="w-4 h-4 text-neonBlue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-                            40 mins
-                        </span>
-                        <a href="#reservas" class="text-neonBlue font-semibold hover:underline">Reservar este servicio &rarr;</a>
-                    </div>
+                    <div class="sum"><h4>Resumen de tu reserva</h4><div class="r">
+                        <div><small>Servicios</small><b id="summary-services">-</b></div>
+                        <div><small>Fecha y hora</small><b id="summary-datetime">-</b></div>
+                        <div><small>Total a pagar</small><b id="summary-price">-</b></div></div></div>
+                    <div class="nav-row"><button type="button" onclick="prevStep(3)" class="btn ghost">Atrás</button><button type="submit" id="submit-booking-btn" class="btn">Confirmar cita</button></div>
+                </div>
+            </form>
+
+            <div id="success-screen" class="hidden">
+                <svg class="check" viewBox="0 0 84 84"><circle cx="42" cy="42" r="40"/><path d="M26 43l11 11 21-23"/></svg>
+                <h3>¡Cita reservada con éxito!</h3>
+                <p>Tu espacio ha sido registrado en nuestro sistema. Te esperamos puntualmente.</p>
+                <div class="ticket">
+                    <div><span>Cliente</span><span id="suc-name"></span></div>
+                    <div><span>Email</span><span id="suc-email"></span></div>
+                    <div><span>Servicios</span><span id="suc-services"></span></div>
+                    <div><span>Barbero</span><span id="suc-barber"></span></div>
+                    <div><span>Fecha y hora</span><span id="suc-datetime"></span></div>
+                    <div><span>Total a pagar</span><span id="suc-price"></span></div>
+                </div>
+                <div class="cta">
+                    <a id="whatsapp-btn" href="#" target="_blank" rel="noopener" class="btn wa"><svg viewBox="0 0 24 24" fill="currentColor" ><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg> Enviar por WhatsApp</a>
+                    <button type="button" class="btn ghost" onclick="descargarICS()">📅 Agregar al calendario</button>
+                    <button type="button" class="btn ghost" onclick="resetBooking()">Reservar otra cita</button>
                 </div>
             </div>
         </div>
-    </section>
+    </div></section>
 
-    <!-- Único Barbero -->
-    <section id="barberos" class="py-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="text-neonBlue uppercase tracking-widest text-xs font-semibold block mb-2">Profesional</span>
-                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white mb-4">Nuestro Barbero</h2>
-                <p class="text-gray-400">Maestro artesano dedicado a perfeccionar tu imagen.</p>
-            </div>
-
-            <div class="max-w-md mx-auto">
-                <div class="bg-cardBg rounded-2xl overflow-hidden border border-gray-800 group">
-                    <div class="h-80 overflow-hidden relative">
-                        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&q=80&w=600" alt="Lewis Habano" class="w-full h-full object-cover group-hover:scale-105 transition-all duration-500 filter grayscale group-hover:grayscale-0">
-                        <div class="absolute inset-0 bg-gradient-to-t from-darkBg via-transparent to-transparent"></div>
-                    </div>
-                    <div class="p-6 text-center">
-                        <h3 class="font-serif text-xl font-bold text-white mb-1">Lewis Habano</h3>
-                        <p class="text-neonBlue text-xs uppercase tracking-widest mb-4">Master Barber & Estilista</p>
-                        <p class="text-gray-400 text-sm mb-6">10 años de experiencia transformando estilos con precisión milimétrica y atención personalizada.</p>
-                        <button onclick="selectBarber('Lewis Habano')" class="w-full border border-neonBlue text-neonBlue hover:bg-neonBlue hover:text-black py-2.5 rounded-full text-sm font-semibold transition-all">
-                            Elegir a Lewis
-                        </button>
-                    </div>
-                </div>
-            </div>
+    <footer id="contacto"><div class="wrap">
+        <div class="foot">
+            <div><a href="#inicio" class="brand" style="margin-bottom:14px"><img src="img/logo.jpg.jpeg" alt=""><div><b>BROTHERS</b><small>Barber Shop</small></div></a><p>Tradición y estilo moderno, directo a tu puerta.</p></div>
+            <div><h5>Navegación</h5><a href="#inicio">Inicio</a><a href="#servicios">Servicios</a><a href="#barberos">Barbero</a><a href="#reservas">Reservar</a><a href="#contacto">Contacto</a></div>
+            <div><h5>Contacto</h5><a href="https://wa.me/584126623818" target="_blank" rel="noopener">WhatsApp: +58 412 6623818</a><a href="#reservas">Reservar cita en línea</a></div>
         </div>
-    </section>
+        <div class="copy">&copy; 2026 Brothers Barber Shop. Todos los derechos reservados.</div>
+    </div></footer>
 
-    <section id="reservas" class="py-24 bg-darkerBg/50 border-t border-b border-gray-900">
-        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center max-w-2xl mx-auto mb-16">
-                <span class="text-neonBlue uppercase tracking-widest text-xs font-semibold block mb-2">Sistema en Línea</span>
-                <h2 class="font-serif text-3xl sm:text-5xl font-bold text-white mb-4">Reserva tu Cita</h2>
-                <p class="text-gray-400">Completa los siguientes pasos para asegurar tu espacio en nuestra agenda.</p>
-            </div>
+    <a class="wa-float" href="https://wa.me/584126623818" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" ><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg></a>
+    <div id="toast" role="status"></div>
 
-            <!-- Booking Container -->
-            <div class="bg-cardBg p-6 sm:p-10 rounded-3xl border border-neonBlue/30 shadow-2xl relative">
-                
-                <!-- Steps Progress Indicator -->
-                <div class="flex items-center justify-between mb-10 pb-6 border-b border-gray-800 max-w-md mx-auto text-xs sm:text-sm font-medium">
-                    <div id="step-indicator-1" class="flex items-center gap-2 text-neonBlue">
-                        <span class="w-7 h-7 rounded-full border border-neonBlue flex items-center justify-center font-bold">1</span>
-                        <span class="hidden sm:inline">Servicios</span>
-                    </div>
-                    <div class="w-8 h-[1px] bg-gray-700"></div>
-                    <div id="step-indicator-2" class="flex items-center gap-2 text-gray-500">
-                        <span class="w-7 h-7 rounded-full border border-gray-700 flex items-center justify-center font-bold">2</span>
-                        <span class="hidden sm:inline">Barbero</span>
-                    </div>
-                    <div class="w-8 h-[1px] bg-gray-700"></div>
-                    <div id="step-indicator-3" class="flex items-center gap-2 text-gray-500">
-                        <span class="w-7 h-7 rounded-full border border-gray-700 flex items-center justify-center font-bold">3</span>
-                        <span class="hidden sm:inline">Fecha & Hora</span>
-                    </div>
-                    <div class="w-8 h-[1px] bg-gray-700"></div>
-                    <div id="step-indicator-4" class="flex items-center gap-2 text-gray-500">
-                        <span class="w-7 h-7 rounded-full border border-gray-700 flex items-center justify-center font-bold">4</span>
-                        <span class="hidden sm:inline">Tus Datos</span>
-                    </div>
-                </div>
-
-                <!-- CONTENEDOR DE MENSAJES DE ERROR PROFESIONALES -->
-                <div id="form-alert" class="hidden mb-6 p-4 rounded-xl border bg-darkerBg text-sm flex items-center gap-3 transition-all">
-                    <span id="form-alert-text" class="text-white"></span>
-                </div>
-
-                <!-- Form / Steps Content -->
-                <form id="booking-form" onsubmit="confirmBooking(event)">
-                    
-                    <!-- STEP 1: SELECT SERVICES (CHECKBOXES) -->
-                    <div id="step-1" class="space-y-6">
-                        <h3 class="font-serif text-xl font-bold text-white mb-4">Selecciona uno o más servicios:</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <label class="cursor-pointer border border-gray-800 hover:border-neonBlue p-4 rounded-xl flex items-center justify-between bg-darkerBg transition-all">
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="service" value="Corte Clásico" data-price="4" class="w-5 h-5 accent-[#00f3ff] rounded">
-                                    <div>
-                                        <p class="font-semibold text-white">Corte Clásico</p>
-                                        <p class="text-xs text-gray-400">45 mins</p>
-                                    </div>
-                                </div>
-                                <span class="text-neonBlue font-bold">$4.00</span>
-                            </label>
-
-                            <label class="cursor-pointer border border-gray-800 hover:border-neonBlue p-4 rounded-xl flex items-center justify-between bg-darkerBg transition-all">
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="service" value="Arreglo de Barba" data-price="3" class="w-5 h-5 accent-[#00f3ff] rounded">
-                                    <div>
-                                        <p class="font-semibold text-white">Arreglo de Barba</p>
-                                        <p class="text-xs text-gray-400">30 mins</p>
-                                    </div>
-                                </div>
-                                <span class="text-neonBlue font-bold">$3.00</span>
-                            </label>
-
-                            <label class="cursor-pointer border border-gray-800 hover:border-neonBlue p-4 rounded-xl flex items-center justify-between bg-darkerBg transition-all">
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="service" value="Corte + Barba (Combo)" data-price="6" class="w-5 h-5 accent-[#00f3ff] rounded">
-                                    <div>
-                                        <p class="font-semibold text-white">Corte + Barba (Combo)</p>
-                                        <p class="text-xs text-gray-400">75 mins</p>
-                                    </div>
-                                </div>
-                                <span class="text-neonBlue font-bold">$6.00</span>
-                            </label>
-
-                            <label class="cursor-pointer border border-gray-800 hover:border-neonBlue p-4 rounded-xl flex items-center justify-between bg-darkerBg transition-all">
-                                <div class="flex items-center gap-3">
-                                    <input type="checkbox" name="service" value="Afeitado Tradicional" data-price="5" class="w-5 h-5 accent-[#00f3ff] rounded">
-                                    <div>
-                                        <p class="font-semibold text-white">Afeitado Tradicional</p>
-                                        <p class="text-xs text-gray-400">40 mins</p>
-                                    </div>
-                                </div>
-                                <span class="text-neonBlue font-bold">$5.00</span>
-                            </label>
-                        </div>
-
-                        <div class="flex justify-end pt-6">
-                            <!-- CORREGIDO: Se elimina el espacio tipográfico en el nombre de la función -->
-                            <button type="button" onclick="validarServiciosYavanzar(2)" class="bg-neonBlue text-black font-bold px-8 py-3 rounded-full hover:bg-neonBlue-light transition-all flex items-center gap-2">
-                                <span>Siguiente</span>
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- STEP 2: SELECT BARBER -->
-                    <div id="step-2" class="space-y-6 hidden">
-                        <h3 class="font-serif text-xl font-bold text-white mb-4">Barbero disponible:</h3>
-                        <div class="max-w-md mx-auto">
-                            <label class="cursor-pointer border border-neonBlue p-5 rounded-xl text-center bg-darkerBg transition-all flex items-center justify-between">
-                                <div class="flex items-center gap-3">
-                                    <input type="radio" name="barber" value="Lewis Habano" class="accent-[#00f3ff]" checked required>
-                                    <div class="text-left">
-                                        <p class="font-semibold text-white">Lewis Habano</p>
-                                        <p class="text-xs text-neonBlue">Master Barber & Estilista</p>
-                                    </div>
-                                </div>
-                                <span class="text-xs bg-neonBlue/10 text-neonBlue border border-neonBlue/30 px-3 py-1 rounded-full">Seleccionado</span>
-                            </label>
-                        </div>
-
-                        <div class="flex justify-between pt-6">
-                            <button type="button" onclick="prevStep(1)" class="border border-gray-700 text-white font-semibold px-6 py-3 rounded-full hover:bg-gray-800 transition-all">
-                                Atrás
-                            </button>
-                            <button type="button" onclick="nextStep(3)" class="bg-neonBlue text-black font-bold px-8 py-3 rounded-full hover:bg-neonBlue-light transition-all flex items-center gap-2">
-                                <span>Siguiente</span>
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- STEP 3: DATE & TIME -->
-                    <div id="step-3" class="space-y-6 hidden">
-                        <h3 class="font-serif text-xl font-bold text-white mb-4">Elige la fecha y hora disponible:</h3>
-                        
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Fecha de la cita</label>
-                                <input type="date" id="booking-date" class="w-full bg-darkerBg border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neonBlue" required>
-                            </div>
-                            <div>
-                                <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Hora disponible</label>
-                                <select id="booking-time" class="w-full bg-darkerBg border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neonBlue" required>
-                                    <option value="">Selecciona un horario</option>
-                                    <option value="09:00 AM">09:00 AM</option>
-                                    <option value="10:00 AM">10:00 AM</option>
-                                    <option value="11:00 AM">11:00 AM</option>
-                                    <option value="01:00 PM">01:00 PM</option>
-                                    <option value="02:30 PM">02:30 PM</option>
-                                    <option value="04:00 PM">04:00 PM</option>
-                                    <option value="05:30 PM">05:30 PM</option>
-                                    <option value="07:00 PM">07:00 PM</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-between pt-6">
-                            <button type="button" onclick="prevStep(2)" class="border border-gray-700 text-white font-semibold px-6 py-3 rounded-full hover:bg-gray-800 transition-all">
-                                Atrás
-                            </button>
-                            <button type="button" onclick="verificarYAvanzar()" class="bg-neonBlue text-black font-bold px-8 py-3 rounded-full hover:bg-neonBlue-light transition-all flex items-center gap-2">
-                                <span>Siguiente</span>
-                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- STEP 4: CUSTOMER DETAILS (CAMBIADO TELÉFONO POR EMAIL) -->
-                    <div id="step-4" class="space-y-6 hidden">
-                        <h3 class="font-serif text-xl font-bold text-white mb-4">Tus datos para confirmar:</h3>
-                        
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Nombre completo</label>
-                                <input type="text" id="client-name" placeholder="Ej. Roberto Gómez" class="w-full bg-darkerBg border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neonBlue" required>
-                            </div>
-                            <div>
-                                <label class="block text-xs uppercase tracking-widest text-gray-400 mb-2">Correo Electrónico (Email)</label>
-                                <input type="email" id="client-email" placeholder="Ej. roberto@email.com" class="w-full bg-darkerBg border border-gray-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-neonBlue" required>
-                            </div>
-                        </div>
-
-                        <!-- Live Summary Box -->
-                        <div class="bg-darkerBg p-5 rounded-xl border border-gray-800 mt-6">
-                            <h4 class="font-semibold text-neonBlue mb-3 text-sm uppercase tracking-wider">Resumen de tu reserva:</h4>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
-                                <div>
-                                    <span class="text-gray-500 block">Servicios:</span>
-                                    <span id="summary-services" class="text-white font-medium">-</span>
-                                </div>
-                                <div>
-                                    <span class="text-gray-500 block">Fecha y Hora:</span>
-                                    <span id="summary-datetime" class="text-white font-medium">-</span>
-                                </div>
-                                <div>
-                                    <span class="text-gray-500 block">Total a pagar:</span>
-                                    <span id="summary-price" class="text-neonBlue font-bold text-sm">-</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex justify-between pt-6">
-                            <button type="button" onclick="prevStep(3)" class="border border-gray-700 text-white font-semibold px-6 py-3 rounded-full hover:bg-gray-800 transition-all">
-                                Atrás
-                            </button>
-                            <button type="submit" id="submit-booking-btn" class="bg-neonBlue text-black font-bold px-8 py-3 rounded-full hover:bg-neonBlue-light transition-all shadow-lg shadow-neonBlue/30">
-                                Confirmar Cita
-                            </button>
-                        </div>
-                    </div>
-                </form>
-
-                <!-- SUCCESS SCREEN -->
-                <div id="success-screen" class="hidden text-center py-8 space-y-6">
-                    <div class="w-16 h-16 bg-neonBlue/20 text-neonBlue rounded-full flex items-center justify-center mx-auto text-3xl font-bold border-2 border-neonBlue shadow-[0_0_15px_rgba(0,243,255,0.4)]">
-                        ✓
-                    </div>
-                    <div>
-                        <h3 class="font-serif text-2xl font-bold text-white mb-2">¡Cita Reservada con Éxito!</h3>
-                        <p class="text-gray-400 text-sm max-w-md mx-auto">Tu espacio ha sido registrado en nuestro sistema. Te esperamos puntualmente en la barbería.</p>
-                    </div>
-
-                    <div class="bg-darkerBg p-6 rounded-2xl border border-gray-800 max-w-md mx-auto text-left space-y-3 text-sm">
-                        <div class="flex justify-between border-b border-gray-800 pb-2">
-                            <span class="text-gray-400">Cliente:</span>
-                            <span id="suc-name" class="text-white font-semibold"></span>
-                        </div>
-                        <div class="flex justify-between border-b border-gray-800 pb-2">
-                            <span class="text-gray-400">Email:</span>
-                            <span id="suc-email" class="text-white font-semibold"></span>
-                        </div>
-                        <div class="flex justify-between border-b border-gray-800 pb-2">
-                            <span class="text-gray-400">Servicios:</span>
-                            <span id="suc-services" class="text-white font-semibold"></span>
-                        </div>
-                        <div class="flex justify-between border-b border-gray-800 pb-2">
-                            <span class="text-gray-400">Barbero:</span>
-                            <span id="suc-barber" class="text-white font-semibold"></span>
-                        </div>
-                        <div class="flex justify-between border-b border-gray-800 pb-2">
-                            <span class="text-gray-400">Fecha y Hora:</span>
-                            <span id="suc-datetime" class="text-white font-semibold"></span>
-                        </div>
-                        <div class="flex justify-between pt-1">
-                            <span class="text-gray-400">Total a pagar:</span>
-                            <span id="suc-price" class="text-neonBlue font-bold text-base"></span>
-                        </div>
-                    </div>
-
-                    <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
-                        <a id="whatsapp-btn" href="#" target="_blank" class="w-full sm:w-auto bg-[#25D366] text-white font-bold px-8 py-3.5 rounded-full hover:opacity-90 transition-all flex items-center justify-center gap-2 shadow-lg">
-                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
-                            <span>Enviar por WhatsApp</span>
-                        </a>
-                        <button onclick="resetBooking()" class="border border-gray-700 text-white font-semibold px-6 py-3 rounded-full hover:bg-gray-800 transition-all text-sm">
-                            Reservar otra cita
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="bg-darkerBg py-12 border-t border-gray-900 text-center text-sm text-gray-500">
-        <div class="max-w-7xl mx-auto px-4 space-y-4">
-            <div class="flex items-center justify-center gap-3">
-                <img src="img/logo.jpg.jpeg" alt="Brothers Barber Shop" class="w-8 h-8 rounded-full object-cover border border-neonBlue">
-                <span class="font-serif font-bold text-lg text-white">BROTHERS</span>
-                <span class="text-neonBlue font-serif font-semibold">Barber Shop</span>
-            </div>
-            <p>&copy; 2026 Brothers Barber Shop. Todos los derechos reservados.</p>
-        </div>
-    </footer>
-
-    <!-- LÓGICA DE NAVEGACIÓN Y SELECCIÓN DE SERVICIOS -->
-    <script>
-        function nextStep(step) {
-            document.querySelectorAll('[id^="step-"]').forEach(el => el.classList.add('hidden'));
-            document.getElementById(`step-${step}`).classList.remove('hidden');
-            
-            for(let i=1; i<=4; i++) {
-                const ind = document.getElementById(`step-indicator-${i}`);
-                if(i <= step) {
-                    ind.classList.remove('text-gray-500');
-                    ind.classList.add('text-neonBlue');
-                    ind.querySelector('span').classList.remove('border-gray-700');
-                    ind.querySelector('span').classList.add('border-neonBlue');
-                } else {
-                    ind.classList.add('text-gray-500');
-                    ind.classList.remove('text-neonBlue');
-                }
-            }
-
-            if(step === 4) {
-                actualizarResumen();
-            }
-        }
-
-        function prevStep(step) {
-            nextStep(step);
-        }
-
-        function mostrarAlerta(mensaje, tipo = 'error') {
-            const alertaBox = document.getElementById('form-alert');
-            const alertaText = document.getElementById('form-alert-text');
-            
-            alertaBox.classList.remove('hidden');
-            alertaText.innerText = mensaje;
-            
-            if(tipo === 'error') {
-                alertaBox.className = "mb-6 p-4 rounded-xl border border-red-500/50 bg-red-500/10 text-sm flex items-center gap-3 text-red-400";
-            } else {
-                alertaBox.className = "mb-6 p-4 rounded-xl border border-neonBlue/50 bg-neonBlue/10 text-sm flex items-center gap-3 text-neonBlue";
-            }
-        }
-
-        function ocultarAlerta() {
-            document.getElementById('form-alert').classList.add('hidden');
-        }
-
-        function validarServiciosYavanzar(step) {
-            const checks = document.querySelectorAll('input[name="service"]:checked');
-            if (checks.length === 0) {
-                mostrarAlerta("⚠️ Por favor, selecciona al menos un servicio para continuar.");
-                return;
-            }
-            ocultarAlerta();
-            nextStep(step);
-        }
-
-        function obtenerServiciosSeleccionados() {
-            const checks = document.querySelectorAll('input[name="service"]:checked');
-            let lista = [];
-            let total = 0;
-            checks.forEach(chk => {
-                lista.push(chk.value);
-                total += parseInt(chk.dataset.price);
-            });
-            return {
-                nombres: lista.join(', '),
-                total: total
-            };
-        }
-
-        function actualizarResumen() {
-            const serv = obtenerServiciosSeleccionados();
-            const fecha = document.getElementById('booking-date').value;
-            const hora = document.getElementById('booking-time').value;
-
-            document.getElementById('summary-services').innerText = serv.nombres;
-            document.getElementById('summary-datetime').innerText = `${fecha} a las ${hora}`;
-            document.getElementById('summary-price').innerText = `$${serv.total}.00`;
-        }
-
-        function resetBooking() {
-            document.getElementById('booking-form').reset();
-            document.getElementById('success-screen').classList.add('hidden');
-            document.getElementById('booking-form').classList.remove('hidden');
-            nextStep(1);
-        }
-    </script>
+    <!-- Interfaz (funciones globales que usa el bloque de Firebase de abajo) -->
+    <script src="script.js"></script>
 
     <!-- FIREBASE FIRESTORE & VALIDACIÓN DE DISPONIBILIDAD -->
     <script type="module">
