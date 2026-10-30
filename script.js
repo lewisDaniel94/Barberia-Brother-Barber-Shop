@@ -1,6 +1,4 @@
-/* Brothers Barber Shop · interfaz (sin Firebase).
-   Define las funciones globales que el bloque de Firebase del index.html usa:
-   mostrarAlerta, ocultarAlerta, nextStep, obtenerServiciosSeleccionados */
+/* Brothers Barber Shop · interfaz con control moderno de slots en tiempo real */
 (() => {
   const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
   const pad = n => String(n).padStart(2, '0');
@@ -52,7 +50,7 @@
     $('#summary-datetime').textContent = `${$('#booking-date').value} a las ${$('#booking-time').value}`;
     $('#summary-price').textContent = `$${s.total}.00`;
   };
-  // Botones "Reservar este servicio": marcan el servicio y llevan al formulario
+
   $$('[data-pick]').forEach(b => b.addEventListener('click', () => {
     const chk = $$('input[name="service"]').find(i => i.value === b.dataset.pick);
     if (chk) { chk.checked = true; actualizarTotal(); }
@@ -65,36 +63,28 @@
   };
   $$('[data-barber]').forEach(b => b.addEventListener('click', () => window.selectBarber(b.dataset.barber)));
 
-  /* ---------- Fecha y horarios (mismos valores de hora que ya guardas en Firebase) ---------- */
+  /* ---------- Fecha y horarios ---------- */
   const fecha = $('#booking-date'), hora = $('#booking-time');
   if (fecha) fecha.min = hoy();
-  const aMin = t => { const m = t.match(/(\d+):(\d+) (AM|PM)/); return (+m[1] % 12 + (m[3] === 'PM' ? 12 : 0)) * 60 + +m[2]; };
-  const refrescarHoras = () => {
-    const esHoy = fecha.value === hoy(), n = new Date(), ahora = n.getHours() * 60 + n.getMinutes();
-    $$('.slot').forEach(s => {
-      s.disabled = esHoy && aMin(s.dataset.v) <= ahora;
-      if (s.disabled && s.classList.contains('sel')) { s.classList.remove('sel'); hora.value = ''; }
-    });
-  };
-  fecha?.addEventListener('change', () => { if (fecha.value && fecha.value < hoy()) { fecha.value = hoy(); toast('Elige una fecha desde hoy'); } refrescarHoras(); window.ocultarAlerta(); });
+
+  fecha?.addEventListener('change', () => { 
+    if (fecha.value && fecha.value < hoy()) { fecha.value = hoy(); toast('Elige una fecha desde hoy'); } 
+    window.ocultarAlerta();
+    if (window.actualizarSlotsOcupados) window.actualizarSlotsOcupados();
+  });
+
   $$('.slot').forEach(s => s.addEventListener('click', () => {
+    if (s.disabled) return;
     $$('.slot').forEach(x => { x.classList.remove('sel'); x.setAttribute('aria-pressed', 'false'); });
     s.classList.add('sel'); s.setAttribute('aria-pressed', 'true'); hora.value = s.dataset.v; window.ocultarAlerta();
   }));
 
-  /* ---------- Envío, reinicio y calendario ---------- */
+  /* ---------- Envío, reinicio ---------- */
   $('#booking-form')?.addEventListener('submit', () => { const b = $('#submit-booking-btn'); if (b) { b.disabled = true; b.textContent = 'Confirmando…'; } });
   window.resetBooking = () => {
     $('#booking-form').reset(); hora.value = ''; $$('.slot').forEach(s => s.classList.remove('sel'));
     $('#success-screen').classList.add('hidden'); $('#booking-form').classList.remove('hidden'); restaurarBoton(); actualizarTotal(); window.nextStep(1);
-  };
-  window.descargarICS = () => {
-    const m = $('#suc-datetime').textContent.match(/(\d{4})-(\d{2})-(\d{2}) a las (\d{2}):(\d{2}) (AM|PM)/); if (!m) return;
-    const mins = $$('input[name="service"]:checked').reduce((s, c) => s + (+c.dataset.min || 0), 0) || 45;
-    const st = new Date(+m[1], m[2] - 1, +m[3], +m[4] % 12 + (m[6] === 'PM' ? 12 : 0), +m[5]), en = new Date(st.getTime() + mins * 60000);
-    const f = d => `${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}T${pad(d.getHours())}${pad(d.getMinutes())}00`;
-    const ics = ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Brothers Barber Shop//ES', 'BEGIN:VEVENT', 'DTSTART:' + f(st), 'DTEND:' + f(en), 'SUMMARY:Cita en Brothers Barber Shop', 'DESCRIPTION:' + $('#suc-services').textContent, 'END:VEVENT', 'END:VCALENDAR'].join('\r\n');
-    const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([ics], { type: 'text/calendar' })); a.download = 'cita-barberia.ics'; a.click();
+    if (window.actualizarSlotsOcupados) window.actualizarSlotsOcupados();
   };
 
   /* ---------- Efectos de página ---------- */

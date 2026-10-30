@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración Professional | Brothers Barber Shop</title>
+    <link rel="icon" href="img/logo.jpg.jpeg">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-wrap { max-width: 1140px; margin: 30px auto; padding: 0 20px; }
+        .admin-card { background: var(--s1); border: 1px solid var(--line); border-radius: var(--r); padding: 25px; margin-bottom: 25px; }
+        .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 15px; margin-bottom: 25px; }
+        .metric-box { background: var(--s2); border: 1px solid var(--line); border-radius: 14px; padding: 18px; }
+        .metric-box small { color: var(--mut); text-transform: uppercase; letter-spacing: .12em; font-size: .68rem; display: block; margin-bottom: 6px; }
+        .metric-box span { font-family: var(--serif); font-size: 1.7rem; color: var(--a); font-weight: 700; }
+        
+        .table-container { width: 100%; overflow-x: auto; }
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: .88rem; }
+        th, td { padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+        th { color: var(--a); font-family: var(--serif); font-weight: 600; letter-spacing: .05em; background: rgba(255,255,255,.02); }
+        tr:hover td { background: rgba(255,255,255,.02); }
+        
+        .status-badge { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; font-size: .75rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; cursor: pointer; border: none; transition: transform .15s ease; }
+        .status-badge:hover { transform: scale(1.04); }
+        .status-pending { background: rgba(255, 193, 7, .12); color: #ffc107; border: 1px solid rgba(255, 193, 7, .3); }
+        .status-completed { background: rgba(40, 167, 69, .12); color: #28a745; border: 1px solid rgba(40, 167, 69, .3); }
+        
+        .btn-action { background: transparent; border: 1px solid var(--line); color: #ff6b6b; padding: 5px 10px; border-radius: 6px; cursor: pointer; font-size: .78rem; transition: all .2s; }
+        .btn-action:hover { background: rgba(255, 107, 107, .15); border-color: #ff6b6b; }
+        
+        .tabs-bar { display: flex; gap: 10px; margin-bottom: 20px; border-bottom: 1px solid var(--line); padding-bottom: 10px; }
+        .tab-item { background: transparent; border: none; color: var(--mut); padding: 8px 16px; font-weight: 600; font-size: .85rem; cursor: pointer; border-radius: 8px; }
+        .tab-item.active { background: var(--s2); color: var(--a); border: 1px solid var(--line); }
+
+        .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.85); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; z-index: 1000; padding: 20px; }
+        .modal-box { background: var(--s1); border: 1px solid var(--line); border-radius: 16px; max-width: 500px; width: 100%; padding: 25px; box-shadow: 0 20px 40px rgba(0,0,0,.5); }
+        .modal-box h3 { font-family: var(--serif); font-size: 1.5rem; margin-bottom: 15px; color: var(--a); }
+        
+        .login-box { max-width: 400px; margin: 80px auto; }
+        .login-box h2 { font-family: var(--serif); font-size: 2rem; margin-bottom: 20px; text-align: center; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; flex-wrap: wrap; gap: 15px; }
+        .admin-header h1 { font-family: var(--serif); font-size: 2rem; }
+    </style>
+</head>
+<body style="background: var(--bg);">
+
+    <!-- PANTALLA DE LOGIN -->
+    <div id="login-screen" class="admin-wrap">
+        <div class="admin-card login-box">
+            <h2>Acceso Administrador</h2>
+            <div id="login-alert" class="hidden" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; background: rgba(255,90,90,.1); border: 1px solid rgba(255,90,90,.3); color: #ff8f8f; font-size: .85rem;"></div>
+            <form id="login-form">
+                <div style="margin-bottom: 18px;">
+                    <label class="f" for="admin-email">Correo electrónico</label>
+                    <input type="email" id="admin-email" placeholder="lewishabano3@gmail.com" required>
+                </div>
+                <div style="margin-bottom: 24px;">
+                    <label class="f" for="admin-pass">Contraseña</label>
+                    <input type="password" id="admin-pass" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Entrar al Panel</button>
+            </form>
+            <div style="text-align: center; margin-top: 20px;">
+                <a href="index.html" class="link" style="font-size: .85rem;">← Volver al sitio web</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- PANEL DE CONTROL -->
+    <div id="dashboard-screen" class="admin-wrap hidden">
+        <div class="admin-header">
+            <div>
+                <h1>Panel de Control</h1>
+                <p style="color: var(--mut); font-size: .9rem;">Brothers Barber Shop · Gestión Dinámica</p>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <button type="button" id="cierre-caja-btn" class="btn sm" style="background: var(--a); color: #000;">💰 Cierre de Caja</button>
+                <button type="button" id="logout-btn" class="btn ghost sm">Cerrar sesión</button>
+            </div>
+        </div>
+
+        <!-- TARJETAS DE MÉTRICAS -->
+        <div class="metrics-grid">
+            <div class="metric-box">
+                <small>Citas Registradas Hoy</small>
+                <span id="metric-citas-hoy">0</span>
+            </div>
+            <div class="metric-box">
+                <small>Ingresos en Caja</small>
+                <span id="metric-ingresos-hoy">$0.00</span>
+            </div>
+            <div class="metric-box">
+                <small>Citas Pendientes</small>
+                <span id="metric-pendientes-hoy">0</span>
+            </div>
+            <div class="metric-box">
+                <small>Total Histórico Citas</small>
+                <span id="metric-total-citas">0</span>
+            </div>
+        </div>
+
+        <!-- TABLA Y FILTROS -->
+        <div class="admin-card">
+            <div class="tabs-bar">
+                <button class="tab-item active" data-filter="all">Todas las Citas</button>
+                <button class="tab-item" data-filter="pending">Pendientes</button>
+                <button class="tab-item" data-filter="completed">Completadas</button>
+            </div>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cliente</th>
+                            <th>Servicios</th>
+                            <th>Barbero</th>
+                            <th>Fecha y Hora</th>
+                            <th>Monto</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="citas-table-body">
+                        <tr>
+                            <td colspan="7" style="text-align: center; color: var(--mut);">Cargando citas...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL CIERRE DE CAJA -->
+    <div id="modal-cierre" class="modal-overlay hidden">
+        <div class="modal-box">
+            <h3>Resumen Cierre de Caja</h3>
+            <div id="cierre-detalles" style="margin: 20px 0; font-size: .95rem; line-height: 1.6; color: var(--text);">
+                <!-- Contenido generado por JS -->
+            </div>
+            <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 25px;">
+                <button type="button" id="btn-cancelar-cierre" class="btn ghost sm">Cancelar</button>
+                <button type="button" id="btn-confirmar-purgar" class="btn sm" style="background: #ff6b6b; color: #fff; border: none;">Limpiar y Purgar Citas</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- FIREBASE MODULE LOGIC -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, onSnapshot, doc, updateDoc, deleteDoc, query, orderBy, writeBatch } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAr-oBYOwwguEOOzC14Rc_N63nJpBFCnz4",
+            authDomain: "barberia-brother-barber-shop.firebaseapp.com",
+            projectId: "barberia-brother-barber-shop",
+            storageBucket: "barberia-brother-barber-shop.firebasestorage.app",
+            messagingSenderId: "397748184756",
+            appId: "1:397748184756:web:8797e5fe2736ade0d559e1",
+            measurementId: "G-TQXE37W4FK"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let citasCache = [];
+        let filtroActual = 'all';
+
+        const loginScreen = document.getElementById('login-screen');
+        const dashboardScreen = document.getElementById('dashboard-screen');
+        const loginForm = document.getElementById('login-form');
+        const loginAlert = document.getElementById('login-alert');
+        const logoutBtn = document.getElementById('logout-btn');
+        const modalCierre = document.getElementById('modal-cierre');
+
+        // Autenticación
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                loginScreen.classList.add('hidden');
+                dashboardScreen.classList.remove('hidden');
+                escucharCitasEnTiempoReal();
+            } else {
+                dashboardScreen.classList.add('hidden');
+                loginScreen.classList.remove('hidden');
+            }
+        });
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            loginAlert.classList.add('hidden');
+            try {
+                await signInWithEmailAndPassword(auth, document.getElementById('admin-email').value, document.getElementById('admin-pass').value);
+            } catch (error) {
+                loginAlert.textContent = "Correo o contraseña incorrectos. Verifica tus datos.";
+                loginAlert.classList.remove('hidden');
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => signOut(auth));
+
+        // Escuchador Firestore en Tiempo Real
+        function escucharCitasEnTiempoReal() {
+            const q = query(collection(db, "citas"), orderBy("creadoEn", "desc"));
+            onSnapshot(q, (snapshot) => {
+                citasCache = [];
+                snapshot.forEach((docSnap) => {
+                    citasCache.push({ id: docSnap.id, ...docSnap.data() });
+                });
+                renderizarPanel();
+            }, (error) => {
+                console.error("Error al obtener citas:", error);
+            });
+        }
+
+        // Renderizado Dinámico
+        function renderizarPanel() {
+            const tbody = document.getElementById('citas-table-body');
+            
+            let totalCitas = citasCache.length;
+            let citasHoyCount = citasCache.length;
+            let ingresosHoy = 0;
+            let pendientesHoy = 0;
+
+            let citasFiltradas = citasCache.filter(c => {
+                const estado = c.estado || 'pendiente';
+                if (filtroActual === 'pending') return estado === 'pendiente';
+                if (filtroActual === 'completed') return estado === 'completado';
+                return true;
+            });
+
+            citasCache.forEach(c => {
+                const estado = c.estado || 'pendiente';
+                const valorNumerico = parseFloat(c.total?.replace('$', '').trim()) || 0;
+                
+                ingresosHoy += valorNumerico; 
+
+                if (estado === 'pendiente') {
+                    pendientesHoy++;
+                }
+            });
+
+            document.getElementById('metric-total-citas').textContent = totalCitas;
+            document.getElementById('metric-citas-hoy').textContent = citasHoyCount;
+            document.getElementById('metric-ingresos-hoy').textContent = `$${ingresosHoy.toFixed(2)}`;
+            document.getElementById('metric-pendientes-hoy').textContent = pendientesHoy;
+
+            if (citasFiltradas.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--mut);">No hay citas para mostrar.</td></tr>`;
+                return;
+            }
+
+            let htmlRows = "";
+            citasFiltradas.forEach(c => {
+                const estado = c.estado || 'pendiente';
+                const esCompletado = estado === 'completado';
+                const badgeClass = esCompletado ? 'status-completed' : 'status-pending';
+                const badgeText = esCompletado ? '✓ Completado' : '⏳ Pendiente';
+
+                htmlRows += `
+                    <tr>
+                        <td><b>${c.cliente || 'Sin nombre'}</b><br><small style="color: var(--mut);">${c.email || ''}</small></td>
+                        <td>${c.servicios || '-'}</td>
+                        <td>${c.barbero || 'Lewis Habano'}</td>
+                        <td>${c.fechaHora || '-'}</td>
+                        <td><strong style="color: var(--a);">${c.total || '$0.00'}</strong></td>
+                        <td>
+                            <button class="status-badge ${badgeClass}" onclick="toggleEstado('${c.id}', '${estado}')">
+                                ${badgeText}
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn-action" onclick="eliminarCita('${c.id}', '${c.cliente}')">Eliminar</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            tbody.innerHTML = htmlRows;
+        }
+
+        // Cambiar Estado
+        window.toggleEstado = async (id, estadoActual) => {
+            const nuevoEstado = estadoActual === 'completado' ? 'pendiente' : 'completado';
+            try {
+                await updateDoc(doc(db, "citas", id), { estado: nuevoEstado });
+            } catch (error) {
+                alert("Error al actualizar el estado de la cita");
+            }
+        };
+
+        // Eliminar Cita Individual
+        window.eliminarCita = async (id, cliente) => {
+            if (confirm(`¿Estás seguro de eliminar la cita de ${cliente || 'este cliente'}?`)) {
+                try {
+                    await deleteDoc(doc(db, "citas", id));
+                } catch (error) {
+                    alert("Error al eliminar la cita");
+                }
+            }
+        };
+
+        // Filtros por Pestaña
+        document.querySelectorAll('.tab-item').forEach(tab => {
+            tab.addEventListener('click', (e) => {
+                document.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+                e.target.classList.add('active');
+                filtroActual = e.target.dataset.filter;
+                renderizarPanel();
+            });
+        });
+
+        // Cierre de Caja
+        document.getElementById('cierre-caja-btn').addEventListener('click', () => {
+            let totalRecaudado = 0;
+            let citasIds = [];
+
+            citasCache.forEach(c => {
+                citasIds.push(c.id);
+                totalRecaudado += parseFloat(c.total?.replace('$', '').trim()) || 0;
+            });
+
+            const htmlDetalles = `
+                <p><strong>Total de Citas Registradas:</strong> ${citasCache.length}</p>
+                <p><strong>Total Recaudado en Caja:</strong> <span style="color: var(--a); font-weight: bold; font-size: 1.2rem;">$${totalRecaudado.toFixed(2)}</span></p>
+                <hr style="border: none; border-top: 1px solid var(--line); margin: 15px 0;">
+                <p style="font-size: .85rem; color: var(--mut);">Al presionar "Limpiar y Purgar Citas", se eliminarán todas las citas actuales de Firebase para iniciar una nueva jornada.</p>
+            `;
+
+            document.getElementById('cierre-detalles').innerHTML = htmlDetalles;
+            modalCierre.classList.remove('hidden');
+
+            document.getElementById('btn-confirmar-purgar').onclick = async () => {
+                if (citasIds.length === 0) {
+                    alert("No hay citas para purgar.");
+                    modalCierre.classList.add('hidden');
+                    return;
+                }
+
+                if (confirm(`¿Confirmas que deseas borrar todas las ${citasIds.length} citas actuales de Firebase?`)) {
+                    try {
+                        const batch = writeBatch(db);
+                        citasIds.forEach(id => {
+                            batch.delete(doc(db, "citas", id));
+                        });
+                        await batch.commit();
+                        modalCierre.classList.add('hidden');
+                        alert("Caja cerrada y registros limpiados con éxito.");
+                    } catch (error) {
+                        alert("Error al limpiar las citas: " + error.message);
+                    }
+                }
+            };
+        });
+
+        document.getElementById('btn-cancelar-cierre').addEventListener('click', () => {
+            modalCierre.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>

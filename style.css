@@ -103,3 +103,11 @@ footer{padding:64px 0 28px;border-top:1px solid var(--line);background:var(--s1)
  #mobile-menu{display:block;position:fixed;inset:78px 0 auto;background:rgba(8,9,12,.97);backdrop-filter:blur(16px);padding:10px 5% 26px;border-bottom:1px solid var(--line);transform:translateY(-130%);transition:transform .4s;z-index:99;width:100%}
  #mobile-menu.open{transform:none}#mobile-menu a{display:block;padding:14px 4px;border-bottom:1px solid var(--line)}#mobile-menu .btn{margin-top:18px;width:100%;border:none;text-align:center}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}[data-reveal]{opacity:1;transform:none}}
+.slot:disabled, .slot.ocupado {
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--mut);
+    border-color: rgba(255, 255, 255, 0.05);
+    cursor: not-allowed;
+    text-decoration: line-through;
+    opacity: 0.5;
+}
