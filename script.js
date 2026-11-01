@@ -79,12 +79,31 @@
     s.classList.add('sel'); s.setAttribute('aria-pressed', 'true'); hora.value = s.dataset.v; window.ocultarAlerta();
   }));
 
-  /* ---------- Envío, reinicio ---------- */
+  /* ---------- Envío, reinicio y redirección al inicio ---------- */
   $('#booking-form')?.addEventListener('submit', () => { const b = $('#submit-booking-btn'); if (b) { b.disabled = true; b.textContent = 'Confirmando…'; } });
+  
   window.resetBooking = () => {
-    $('#booking-form').reset(); hora.value = ''; $$('.slot').forEach(s => s.classList.remove('sel'));
-    $('#success-screen').classList.add('hidden'); $('#booking-form').classList.remove('hidden'); restaurarBoton(); actualizarTotal(); window.nextStep(1);
+    // 1. Limpiar formulario y variables de selección
+    const form = $('#booking-form');
+    if (form) form.reset();
+    if (hora) hora.value = '';
+    $$('.slot').forEach(s => { s.classList.remove('sel'); s.setAttribute('aria-pressed', 'false'); });
+    
+    // 2. Alternar pantallas (ocultar éxito, mostrar formulario)
+    $('#success-screen').classList.add('hidden'); 
+    $('#booking-form').classList.remove('hidden'); 
+    restaurarBoton(); 
+    actualizarTotal(); 
+    window.nextStep(1);
+    
     if (window.actualizarSlotsOcupados) window.actualizarSlotsOcupados();
+
+    // 3. Redireccionar la vista suavemente hacia la sección de inicio de la página
+    window.location.hash = 'inicio';
+    window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+    });
   };
 
   /* ---------- Efectos de página ---------- */
